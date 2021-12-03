@@ -11,15 +11,14 @@ public class Evento {
 	int postiPrenotati = 0;
 	
 	//costruttori
-	public Evento(String titolo, LocalDate data, int postiTotali) throws Exception {
+	public Evento(String titolo, LocalDate data, int postiTotali) {
 		
 		this.titolo = titolo;
 		this.data = data;
 		this.postiTotali = postiTotali;
 		
 		if (!isValidData(data) || !isValidPostiTotali(postiTotali)) {
-			throw new Exception("uno dei dati è errato");
-			// da rivedere
+			// ERRORE
 		}
 		
 	}
@@ -74,8 +73,7 @@ public class Evento {
 	
 	// validatori
 	private boolean isValidData(LocalDate data) {
-		LocalDate dataOdierna = LocalDate.now();
-		return data.isAfter(dataOdierna);
+		return data.isAfter(LocalDate.now());
 	}
 
 	private boolean isValidPostiTotali(int postiTotali) {
