@@ -27,23 +27,34 @@ public class Main {
 		int postiTotali = scan.nextInt();
 		
 		// nuovo oggetto Evento
-		Evento evento = new Evento(titolo, data, postiTotali);
+		Evento evento = null;
+		try {
+			evento = new Evento(titolo, data, postiTotali);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 		System.out.println(evento.toString());
 		
 		// prenota
 		System.out.print("Quanti posti vuoi prenotare? ");
 		int postiDaPrenotare = scan.nextInt();
 		
-		evento.prenota(postiDaPrenotare);
-		System.out.println("Hai prenotato " + postiDaPrenotare + " posti.");
+		try {
+			evento.prenota(data, postiDaPrenotare);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 		System.out.println("Posti ancora disponibili: " + evento.getPostiLiberi());
 		
 		// disdici
 		System.out.print("Quanti posti vuoi disdire? ");
 		int postiDaDisdire = scan.nextInt();
 		
-		evento.disdici(postiDaDisdire);
-		System.out.println("Hai disdetto " + postiDaDisdire + " posti.");
+		try {
+			evento.disdici(data, postiDaDisdire);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 		System.out.println("Posti ancora disponibili: " + evento.getPostiLiberi());
 		
 		// scanner close

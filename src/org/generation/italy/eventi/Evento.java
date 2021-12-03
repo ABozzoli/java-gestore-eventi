@@ -1,6 +1,7 @@
 package org.generation.italy.eventi;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Evento {
 	
@@ -11,43 +12,57 @@ public class Evento {
 	private int postiPrenotati = 0;
 	
 	//costruttori
-	public Evento(String titolo, LocalDate data, int postiTotali) {
+	public Evento(String titolo, LocalDate data, int postiTotali) throws Exception {
 		
 		this.titolo = titolo;
 		this.data = data;
 		this.postiTotali = postiTotali;
 		
 		if (!isValidData(data)) {
-			System.out.println("ERRORE: data non valida.");
+			throw new Exception("La data inserita è già trascorsa.");
 		}
 		if (!isValidPostiTotali(postiTotali)) {
-			System.out.println("ERRORE: posti totali non validi.");
+			throw new Exception("Il numero inserito è minore o uguale a 0.");
 		}
 		
 	}
 
 	// metodi pubblici
-	public void prenota(int postiDaPrenotare) {
+	public void prenota(LocalDate data, int postiDaPrenotare) throws Exception {
+		
+		if (!isValidData(data)) {
+			throw new Exception("La data inserita è già trascorsa.");
+		}
+		
 		int postiLiberi = postiTotali - postiPrenotati;
 		if (postiDaPrenotare > postiLiberi) {
-			System.out.println("ERRORE: posti non disponibili");
+			throw new Exception("Il numero di posti selezionati non è disponibile.");
 		} else {
 			postiPrenotati += postiDaPrenotare;
 		}
 		
 	}
 	
-	public void disdici(int postiDaDisdire) {
+	public void disdici(LocalDate data, int postiDaDisdire) throws Exception {
+		
+		if (!isValidData(data)) {
+			throw new Exception("La data inserita è già trascorsa.");
+		}
+		
 		if (postiDaDisdire > postiPrenotati) {
-			System.out.println("ERRORE: non ci sono così tanti posti prenotati");
+			throw new Exception("Il numero di posti prenotati è inferiore a quello inserito.");
 		} else {
 			postiPrenotati -= postiDaDisdire;
 		}
+		
 	}
 	
 	@Override
-	public String toString() { // manca da formattare la data
-		return data.toString() + " - " + titolo;
+	public String toString() { // NON FUNZIONA CORRETTAMENTE
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		String dataString = data.format(formatter);
+		LocalDate dataFormattata = LocalDate.parse(dataString, formatter);
+		return dataFormattata + " - " + titolo;
 	}
 	
 	// getter/setter
