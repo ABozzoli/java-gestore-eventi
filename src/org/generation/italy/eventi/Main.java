@@ -14,25 +14,36 @@ public class Main {
 		// formatter init
 	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		
+	    // attributi
+	    String titolo = null;
+	    String dataString = null;
+	    LocalDate data = null;
+	    int postiTotali = 0;
+	    Evento evento = null;
+	    
 		// richiedi dati per istanziamento Evento
 		System.out.println("Inserire dati nuovo evento");
 		System.out.print("Titolo: ");
-		String titolo = scan.nextLine();
+		titolo = scan.nextLine();
 		
-	    System.out.print("Data [dd/MM/yyyy]: ");
-	    String dataString = scan.nextLine();
-	    LocalDate data = LocalDate.parse(dataString, formatter);
-	 
-		System.out.print("Posti totali: ");
-		int postiTotali = scan.nextInt();
+		while(evento == null) {
+						
+		    System.out.print("Data [dd/MM/yyyy]: ");
+		    dataString = scan.next();
+		    data = LocalDate.parse(dataString, formatter);
+		 
+			System.out.print("Posti totali: ");
+			postiTotali = scan.nextInt();
 		
-		// nuovo oggetto Evento
-		Evento evento = null;
-		try {
-			evento = new Evento(titolo, data, postiTotali);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			// nuovo oggetto Evento
+			try {
+				evento = new Evento(titolo, data, postiTotali);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+			
 		}
+		
 		System.out.println(evento.toString());
 		
 		// prenota
