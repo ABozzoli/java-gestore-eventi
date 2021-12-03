@@ -5,10 +5,10 @@ import java.time.LocalDate;
 public class Evento {
 	
 	// attributi
-	String titolo;
-	LocalDate data;
-	int postiTotali;
-	int postiPrenotati = 0;
+	private String titolo;
+	private LocalDate data;
+	private int postiTotali;
+	private int postiPrenotati = 0;
 	
 	//costruttori
 	public Evento(String titolo, LocalDate data, int postiTotali) {
@@ -17,33 +17,37 @@ public class Evento {
 		this.data = data;
 		this.postiTotali = postiTotali;
 		
-		if (!isValidData(data) || !isValidPostiTotali(postiTotali)) {
-			// ERRORE
+		if (!isValidData(data)) {
+			System.out.println("ERRORE: data non valida.");
+		}
+		if (!isValidPostiTotali(postiTotali)) {
+			System.out.println("ERRORE: posti totali non validi.");
 		}
 		
 	}
 
 	// metodi pubblici
-	public void prenota() {
+	public void prenota(int postiDaPrenotare) {
 		int postiLiberi = postiTotali - postiPrenotati;
-		if (!isValidData(data) || postiLiberi < 1) {
-			// ERRORE
+		if (postiDaPrenotare > postiLiberi) {
+			System.out.println("ERRORE: posti non disponibili");
 		} else {
-			postiPrenotati++;
+			postiPrenotati += postiDaPrenotare;
 		}
+		
 	}
 	
-	public void disdici() {
-		if (!isValidData(data) || postiPrenotati < 1) {
-			// ERRORE
+	public void disdici(int postiDaDisdire) {
+		if (postiDaDisdire > postiPrenotati) {
+			System.out.println("ERRORE: non ci sono così tanti posti prenotati");
 		} else {
-			postiPrenotati--;
+			postiPrenotati -= postiDaDisdire;
 		}
 	}
 	
 	@Override
-	public String toString() {
-		return data.toString() + titolo;
+	public String toString() { // manca da formattare la data
+		return data.toString() + " - " + titolo;
 	}
 	
 	// getter/setter
@@ -69,6 +73,10 @@ public class Evento {
 
 	public int getPostiPrenotati() {
 		return postiPrenotati;
+	}
+	
+	public int getPostiLiberi() {
+		return postiTotali - postiPrenotati;
 	}
 	
 	// validatori

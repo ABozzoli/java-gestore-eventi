@@ -11,26 +11,44 @@ public class Main {
 		// scanner init
 		Scanner scan = new Scanner(System.in);
 		
-		// titolo
+		// formatter init
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		
+		// richiedi dati per istanziamento Evento
 		System.out.println("Inserire dati nuovo evento");
 		System.out.print("Titolo: ");
 		String titolo = scan.nextLine();
 		
-		// data
 	    System.out.print("Data [dd/MM/yyyy]: ");
 	    String dataString = scan.nextLine();
-	    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-	    LocalDate data = LocalDate.parse(dataString, dtf);
+	    LocalDate data = LocalDate.parse(dataString, formatter);
 	 
-	    // posti totali
 		System.out.print("Posti totali: ");
 		int postiTotali = scan.nextInt();
 		
 		// nuovo oggetto Evento
-		Evento e = new Evento(titolo, data, postiTotali);
+		Evento evento = new Evento(titolo, data, postiTotali);
+		System.out.println(evento.toString());
+		
+		// prenota
+		System.out.print("Quanti posti vuoi prenotare? ");
+		int postiDaPrenotare = scan.nextInt();
+		
+		evento.prenota(postiDaPrenotare);
+		System.out.println("Hai prenotato " + postiDaPrenotare + " posti.");
+		System.out.println("Posti ancora disponibili: " + evento.getPostiLiberi());
+		
+		// disdici
+		System.out.print("Quanti posti vuoi disdire? ");
+		int postiDaDisdire = scan.nextInt();
+		
+		evento.disdici(postiDaDisdire);
+		System.out.println("Hai disdetto " + postiDaDisdire + " posti.");
+		System.out.println("Posti ancora disponibili: " + evento.getPostiLiberi());
 		
 		// scanner close
 		scan.close();
+		
 	}
 
 }
