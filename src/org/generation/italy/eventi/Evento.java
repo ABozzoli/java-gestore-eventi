@@ -58,10 +58,9 @@ public class Evento {
 	}
 	
 	@Override
-	public String toString() { // NON FUNZIONA CORRETTAMENTE
+	public String toString() {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		String dataString = data.format(formatter);
-		LocalDate dataFormattata = LocalDate.parse(dataString, formatter);
+		String dataFormattata = data.format(formatter);
 		return dataFormattata + " - " + titolo;
 	}
 	
